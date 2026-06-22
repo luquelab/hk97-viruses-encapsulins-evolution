@@ -8,7 +8,7 @@ Code and analysis workflows used in this study are available in the GitHub repos
 
 ## Reference-list template
 
-Aguilar, A. & Miranda, I. *Small viruses reveal bidirectional evolution between HK97-fold viruses and encapsulins via procapsids*. GitHub repository: luquelab/hk97-viruses-encapsulins-evolution, Zenodo [VERSION DOI URL] (2026).
+Aguilar, A. *Small viruses reveal bidirectional evolution between HK97-fold viruses and encapsulins via procapsids*. GitHub repository: luquelab/hk97-viruses-encapsulins-evolution, Zenodo [VERSION DOI URL] (2026).
 
 Use the final citation exported by Zenodo if its punctuation or creator formatting differs from this template.
 

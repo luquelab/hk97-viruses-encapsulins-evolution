@@ -6,9 +6,6 @@ authors:
   - family-names: Aguilar
     given-names: Abelardo
     affiliation: University of Miami
-  - family-names: Miranda
-    given-names: Ingrid
-    affiliation: University of Miami
 version: 1.0.0
 repository-code: "https://github.com/luquelab/hk97-viruses-encapsulins-evolution"
 license: MIT

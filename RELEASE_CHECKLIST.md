@@ -3,7 +3,7 @@
 ## Before enabling Zenodo
 
 - [ ] Confirm that the accepted article title and repository URL are correct in `README.md`, `CITATION.cff`, and `.zenodo.json`.
-- [ ] Confirm that Abelardo Aguilar and Ingrid Miranda are the intended software creators; add ORCID identifiers if available.
+- [ ] Confirm that Abelardo Aguilar is the intended software creator; add his ORCID identifier if available.
 - [ ] Confirm that Antoni Luque should be listed as a Zenodo contributor with the role `Supervisor`.
 - [ ] Confirm that all files intended for public release contain no credentials, confidential data, or unlicensed third-party material.
 - [ ] Run the validation commands documented below and review `git diff`.
