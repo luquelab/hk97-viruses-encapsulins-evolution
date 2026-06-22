@@ -4,3 +4,5 @@ __pycache__/
 .Rhistory
 .RData
 .Rproj.user/
+.venv/
+reproduced_results/

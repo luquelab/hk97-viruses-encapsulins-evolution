@@ -1,11 +1,16 @@
 from Bio import Entrez, SeqIO
 import pandas as pd
+import os
+from pathlib import Path
 
-# Set your email for NCBI Entrez
-Entrez.email = "abelardoacm@ciencias.unam.mx"
+# NCBI requires users of Entrez to identify themselves with an email address.
+Entrez.email = os.environ.get("NCBI_EMAIL")
+if not Entrez.email:
+    raise RuntimeError("Set NCBI_EMAIL before running this script.")
 
-# Path to save the results
-save_path = "/Users/abelardoaguilar/projects/github_repos/mini-devel/mini-devel/bin/Modules_refactoring/X_isolates_verse/results"
+# Results are written to OUTPUT_DIR when set, or to a local default directory.
+save_path = Path(os.environ.get("OUTPUT_DIR", "results/reference_mcps"))
+save_path.mkdir(parents=True, exist_ok=True)
 
 # Search for major capsid proteins in Heunggongvirae within RefSeq
 search_term = "Heunggongvirae[Organism] AND (major capsid protein[Title] OR mcp[Title]) AND srcdb_refseq[PROP]"
@@ -57,7 +62,7 @@ for protein_id in id_list:
     })
 
 # Save the sequences to a fasta file
-fasta_file_path = f"{save_path}/Heunggongvirae_major_capsid_proteins.fasta"
+fasta_file_path = save_path / "Heunggongvirae_major_capsid_proteins.fasta"
 with open(fasta_file_path, "w") as file:
     SeqIO.write(sequences, file, "fasta")
 
@@ -65,7 +70,7 @@ with open(fasta_file_path, "w") as file:
 df = pd.DataFrame(metadata)
 
 # Save DataFrame to a CSV file
-csv_file_path = f"{save_path}/Heunggongvirae_major_capsid_proteins_metadata.csv"
+csv_file_path = save_path / "Heunggongvirae_major_capsid_proteins_metadata.csv"
 df.to_csv(csv_file_path, index=False)
 
 # Display the DataFrame

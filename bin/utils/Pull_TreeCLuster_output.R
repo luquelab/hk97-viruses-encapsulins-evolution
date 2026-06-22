@@ -7,12 +7,19 @@ library(ggplot2)
 small_threshold <- 11600
 mini_threshold <- 5000
 
-# Define file paths
-clusters_file <- "/Users/abelardoaguilar/projects/github_repos/mini-devel/mini-devel/bin/Modules_refactoring/Clustering_module/results/Proteins_identified_as_MCPs_VIBRANT_efamHMMSEARCH.faa_avg_clade_clusters.txt"
-metadata_file <- "~/projects/github_repos/mini-devel/mini-devel/bin/Modules_refactoring/1_VIBRANT/data/DTRs_20kb.csv"
-output_dir <- "~/projects/github_repos/mini-devel/mini-devel/bin/Modules_refactoring/Clustering_module/results/Absolute_clustering_refactoring_5000/"
-colname_identifiers_metadata <- "genome_id"
-colname_identifiers_clusters <- "SequenceName"
+# Define file paths from command-line arguments.
+args <- commandArgs(trailingOnly = TRUE)
+if (length(args) < 3) {
+  stop(
+    "Usage: Rscript Pull_TreeCLuster_output.R <clusters.tsv> <metadata.csv> <output_dir> ",
+    "[metadata_id_column] [cluster_id_column]"
+  )
+}
+clusters_file <- args[[1]]
+metadata_file <- args[[2]]
+output_dir <- args[[3]]
+colname_identifiers_metadata <- if (length(args) >= 4) args[[4]] else "genome_id"
+colname_identifiers_clusters <- if (length(args) >= 5) args[[5]] else "SequenceName"
 
 # Make directory if it does not exist
 dir.create(output_dir, showWarnings = FALSE)

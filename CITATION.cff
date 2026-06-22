@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use this software, cite the version-specific Zenodo DOI for release v1.0.0."
+type: software
+title: "Small viruses reveal bidirectional evolution between HK97-fold viruses and encapsulins via procapsids"
+authors:
+  - family-names: Aguilar
+    given-names: Abelardo
+    affiliation: University of Miami
+  - family-names: Miranda
+    given-names: Ingrid
+    affiliation: University of Miami
+version: 1.0.0
+repository-code: "https://github.com/luquelab/hk97-viruses-encapsulins-evolution"
+license: MIT
+abstract: "Analysis code and compact example data for domain co-occurrence, sequence-domain coverage, visualization, and statistical comparisons of HK97-fold viral and encapsulin proteins."
+keywords:
+  - HK97-fold
+  - viruses
+  - encapsulins
+  - procapsids
+  - viral evolution
+  - bioinformatics

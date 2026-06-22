@@ -214,7 +214,7 @@ ui <- fluidPage(
   
   sidebarLayout(
     sidebarPanel(
-      fileInput("csv", "Load CSV (optional; if empty uses Figure3_phage_coat_and_encapsulin_fraction.csv)", accept = ".csv"),
+      fileInput("csv", "Load CSV (optional; otherwise uses the repository input)", accept = ".csv"),
       tags$hr(),
       
       selectInput(
@@ -287,11 +287,18 @@ ui <- fluidPage(
 server <- function(input, output, session) {
   
   df_raw <- reactive({
-    default_path <- "Figure3_phage_coat_and_encapsulin_fraction.csv"
+    input_name <- "Violin_plots_phage_coat_and_enc_fraction_data.csv"
+    default_candidates <- c(
+      file.path(getwd(), "data", input_name),
+      file.path(dirname(getwd()), "data", input_name)
+    )
+    default_path <- default_candidates[file.exists(default_candidates)][1]
     path <- if (!is.null(input$csv)) input$csv$datapath else default_path
     
-    validate(need(file.exists(path),
-                  "CSV not found. Upload it, or put Figure3_phage_coat_and_encapsulin_fraction.csv next to app.R."))
+    validate(need(
+      length(path) == 1 && !is.na(path) && file.exists(path),
+      paste("CSV not found. Upload", input_name, "from the repository data directory.")
+    ))
     
     read.csv(path, stringsAsFactors = FALSE)
   })

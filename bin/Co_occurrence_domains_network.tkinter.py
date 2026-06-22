@@ -3,6 +3,7 @@ from tkinter import ttk, filedialog, messagebox
 import pandas as pd
 import networkx as nx
 import itertools
+from pathlib import Path
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
@@ -72,7 +73,10 @@ class CooccurrenceApp:
         self.pair_overrides = {}
 
         # ---- Defaults
-        self.default_input_path = "/Users/abelardoaguilar/projects/github_repos/mini-devel/mini-devel/results/verse_filesystem/Effect_of_DTRs_verse/data/Tree_Annotation/minimal_plus_no_DTR.csv"
+        repository_root = Path(__file__).resolve().parent.parent
+        self.default_input_path = str(
+            repository_root / "data" / "Co_occurrence_domains_network_clan0373_data.csv"
+        )
 
         # ---- Top-level layout: Notebook tabs + status bar
         self.notebook = ttk.Notebook(root)
@@ -754,4 +758,3 @@ if __name__ == "__main__":
     root = tk.Tk()
     app = CooccurrenceApp(root)
     root.mainloop()
-

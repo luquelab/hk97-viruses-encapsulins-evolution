@@ -34,7 +34,7 @@ def main():
     parser = argparse.ArgumentParser(description='Process input and output paths for VIBRANT analysis.')
 
     # Add arguments for input paths
-    parser.add_argument('-v', '--vibrant_output_path', type=str, default='/Users/abelardoaguilar/projects/github_repos/mini-devel/mini-devel/bin/Modules_refactoring/1_VIBRANT/results/VIBRANT_DTRs_20kb/',
+    parser.add_argument('-v', '--vibrant_output_path', type=str, required=True,
                         help='Path to the VIBRANT output directory.')
 
     parser.add_argument('-m', '--metadata_csv_path', type=str, default=None,

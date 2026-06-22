@@ -1,160 +1,109 @@
-# virus_encapsulin_2025
+# HK97 viruses and encapsulins evolution
 
-This repository contains the code and analyses associated with the manuscript:
+Analysis code and compact example data accompanying the accepted Nature Communications article:
 
-**Small viruses reveal multiple evolutionary transitions between HK97-fold viruses and encapsulins** *(under revision)*
+> **Small viruses reveal bidirectional evolution between HK97-fold viruses and encapsulins via procapsids**
 
-Related preprint (bioRxiv, 2025):  
-**Small uncultured viral-like entities redraw the origin of viruses and cellular compartments**  
-https://www.biorxiv.org/content/10.1101/2025.06.18.659913v1
+The publication release of this repository will be archived in Zenodo as version `v1.0.0`. The version-specific Zenodo DOI should be used to cite the exact code associated with the article.
 
----
+## Scope
 
-### What this repository contains
+This repository contains the self-contained workflows used for the domain co-occurrence network and the Fig. 3 domain-coverage analyses, together with their compact inputs and representative outputs. Full primary and intermediate datasets, protein annotations, sequences, structures, and phylogenetic outputs are deposited separately in Figshare.
 
-This repository provides small, self-contained scripts/apps used to generate and explore analyses shown in the manuscript, particularly those behind plots and summary outputs.
-
-The repository is organized as follows:
-
-- `bin/` contains analysis entrypoints and a utils folder with helper scripts
-- `data/` contains input files used with those entrypoints.
-- `results/` contains representative outputs produced from the example inputs (for full outputs please access the Figshare datasets indicated in the manuscript).
-
----
-
-### File-to-file correspondence
-
-Each main analysis has:
-1) a script/app in `bin/`  
-2) a matching input in `data/`  
-3) a matching output folder in `results/`
-
-| Analysis | Entrypoint (bin/) | Input (data/) | Example outputs (results/) |
+| Analysis | Entry point | Input | Representative output |
 |---|---|---|---|
-| Domain co-occurrence network (Tkinter) | `Co_occurrence_domains_network.tkinter.py` | `Co_occurrence_domains_network_clan0373_data.csv` | `Co_occurrence_domains/` |
-| Hexbin: encapsulin fraction vs genome length (Shiny) | `Hexbin_enc_fraction_vs_genome_length.app.R` | `Hexbin_enc_fraction_vs_genome_length_data.csv` | `Hexbin_enc_fraction_vs_genome_length/` |
-| Violin plots: phage coat & encapsulin fraction (Shiny) | `Violin_plots_phage_coat_and_enc_fraction.app.R` | `Violin_plots_phage_coat_and_enc_fraction_data.csv` | `Violin_plots_phage_coat_and_enc_fraction/` |
-| Statistical comparisons across groups (R script) | `Statistics_phage_coat_and_encapsulin_fraction.R` | `Statistics_phage_coat_and_encapsulin_fraction_data.csv` | `Statistics_phage_coat_and_encapsulin_fraction/` |
+| Domain co-occurrence network | `bin/Co_occurrence_domains_network.tkinter.py` | `data/Co_occurrence_domains_network_clan0373_data.csv` | `results/Co_occurrence_domains/` |
+| Encapsulin fraction versus genome length | `bin/Hexbin_enc_fraction_vs_genome_length.app.R` | `data/Hexbin_enc_fraction_vs_genome_length_data.csv` | `results/Hexbin_enc_fraction_vs_genome_length/` |
+| Phage-coat coverage and encapsulin fraction distributions | `bin/Violin_plots_phage_coat_and_enc_fraction.app.R` | `data/Violin_plots_phage_coat_and_enc_fraction_data.csv` | `results/Violin_plots_phage_coat_and_enc_fraction/` |
+| Statistical comparisons among groups | `bin/Statistics_phage_coat_and_encapsulin_fraction.R` | `data/Statistics_phage_coat_and_encapsulin_fraction_data.csv` | `results/Statistics_phage_coat_and_encapsulin_fraction/` |
 
-Additional included data:
-- `data/DTRs_genomes.fna` is a FASTA file used in upstream parts of the broader project.
+The scripts in `bin/utils/` document supporting upstream operations. See `bin/utils/README.md` before using them; some require external software or components from the broader analysis environment and are not standalone figure-reproduction workflows.
 
----
+## Data availability
+
+The complete study datasets are available in three Figshare records:
+
+- Environmental viral genomes and biome metadata: <https://doi.org/10.6084/m9.figshare.30943028>
+- Predicted ORFs and protein annotation outputs: <https://doi.org/10.6084/m9.figshare.30948863>
+- HK97-fold sequences, structures, and phylogenetic analyses: <https://doi.org/10.6084/m9.figshare.30948881>
+
+`data/DTRs_genomes.fna` contains the environmental viral contigs used by upstream parts of the project. The authoritative deposited copy is Data File S4 in the first Figshare record.
 
 ## Requirements
 
-**Python (Tkinter app)**
-- Python 3.x
-- Tkinter
+The statistical workflow was validated with R 4.5.2 and the package versions recorded in `R-packages.txt`. Install missing R packages with:
 
-**R (Shiny apps + statistics)**
-- R 4.x
-- tidyverse
-- RStudio is recommended for running Shiny apps interactively
-
----
-
-## How to run the analyses
-
-### 1) Co-occurrence network app (Python + Tkinter)
-
-**Purpose**  
-Builds a domain co-occurrence network from a binary matrix:
-
-- rows = proteins  
-- columns = Pfam domains  
-- cell = 1 (domain present) / 0 (domain absent)
-
-Nodes are domains; an edge connects two domains if they co-occur in at least one protein. The app also supports group assignment (e.g., “encapsulin” vs “viral”) and path evaluation with a simple cost function.
-
-**Run**
 ```bash
-python bin/Co_occurrence_domains_network.tkinter.py
+Rscript install_r_dependencies.R
 ```
 
-**Using the app (4 tabs overview)**
+The Python applications require Python 3.10 or later, Tk, and the packages listed in `requirements.txt`:
 
-1. **Input tab**
-   - Select the binary matrix input file
-   - Provide the row number where the matrix begins (if the CSV contains header/metadata rows)
-
-2. **Domain grouping tab**
-   - Assign domains to groups (e.g., `encapsulin` or `viral`)
-
-3. **Network + export tab**
-   - Build the co-occurrence graph
-   - Export network
-
-**Example input**
-- `data/Co_occurrence_domains_network_clan0373_data.csv`
-
----
-
-### 2) Hexbin app (R Shiny): encapsulin fraction vs genome length
-
-**Purpose**  
-Interactive hexbin plot where:
-- x-axis = genome length (source genome of each protein)
-- y-axis = encapsulin-fraction coverage (per protein)
-
-Includes a smoothing spline and controls for hexbin/aesthetic parameters.
-
-**Run from terminal**
 ```bash
-R -e "shiny::runApp('bin/Hexbin_enc_fraction_vs_genome_length.app.R', launch.browser=TRUE)"
+python3 -m venv .venv
+source .venv/bin/activate
+python3 -m pip install -r requirements.txt
 ```
 
-**Example input**
-- `data/Hexbin_enc_fraction_vs_genome_length_data.csv`
+On Linux, Tk may need to be installed through the operating-system package manager. The upstream utilities may additionally require command-line tools described in `bin/utils/README.md`.
 
----
+## Run the core analyses
 
-### 3) Violin plots app (R Shiny): phage coat & encapsulin fraction
+Run commands from the repository root.
 
-**Purpose**  
-Interactive violin plots comparing groups of proteins using:
-- phage coat coverage (%)
-- encapsulin fraction coverage (%)
+### Statistical comparisons
 
-**Run from terminal**
+The script writes its CSV outputs to the current working directory. To avoid overwriting the archived representative outputs, use a new directory:
+
 ```bash
-R -e "shiny::runApp('bin/Violin_plots_phage_coat_and_enc_fraction.app.R', launch.browser=TRUE)"
+mkdir -p reproduced_results/statistics
+cd reproduced_results/statistics
+Rscript ../../bin/Statistics_phage_coat_and_encapsulin_fraction.R \
+  ../../data/Statistics_phage_coat_and_encapsulin_fraction_data.csv
 ```
 
-**Example input**
-- `data/Violin_plots_phage_coat_and_enc_fraction_data.csv`
+The random seed, bootstrap replicates, permutation replicates, filtering rules, and post-hoc procedures are defined near the beginning of the script. The primary analysis requires `rstatix`; without it, the script deliberately reports and uses documented fallback procedures that are not identical to the publication analysis.
 
----
+### Domain co-occurrence network
 
-### 4) Statistics script (R): group comparisons + post hoc tests
-
-**Purpose**  
-Runs a statistical testing workflow comparing:
-- `phage_coat_coverage_percent`
-- `encapsulin-fraction`
-
-The script performs an omnibus test and then post hoc comparisons, producing pairwise p-value tables and summary outputs.
-
-**Run:**
 ```bash
-Rscript bin/Statistics_phage_coat_and_encapsulin_fraction.R data/Statistics_phage_coat_and_encapsulin_fraction_data.csv
+python3 bin/Co_occurrence_domains_network.tkinter.py
 ```
 
----
+The application opens the deposited binary domain matrix by default. Use the interface to assign domain groups, build the network, evaluate paths, and export SVG files.
 
-## Helper utilities (bin/utils)
+### Encapsulin fraction versus genome length
 
-The `bin/utils/` folder contains helper scripts used in upstream or supporting steps (not figure apps themselves). Examples include:
-- downloading reference Duplodnaviria MCPs,
-- running VIBRANT in-site,
-- converting `hmmscan` domtblout outputs to CSV,
-- pulling TreeCluster outputs,
-- wrappers to standardize running steps.
+```bash
+Rscript -e "shiny::runApp('bin/Hexbin_enc_fraction_vs_genome_length.app.R', launch.browser=TRUE)"
+```
 
-These scripts were used inside a broader pipeline context and may require environment- and path-specific configurations.
+Upload `data/Hexbin_enc_fraction_vs_genome_length_data.csv` in the application.
 
----
+### Phage-coat coverage and encapsulin fraction distributions
+
+```bash
+Rscript -e "shiny::runApp('bin/Violin_plots_phage_coat_and_enc_fraction.app.R', launch.browser=TRUE)"
+```
+
+The application loads `data/Violin_plots_phage_coat_and_enc_fraction_data.csv` by default when run from the repository.
+
+## Reproducibility notes
+
+- The archived outputs in `results/` are representative analysis outputs rather than the assembled publication figures.
+- The Shiny and Tk applications are interactive. Plot export settings are selected through their interfaces.
+- The statistical workflow sets random seed 1 and records unrounded pairwise results.
+- Complete outputs not suitable for a compact code repository remain preserved in the cited Figshare deposits.
+- The `v1.0.0` GitHub release and its version-specific Zenodo DOI identify the code state used for publication.
+
+## Citation
+
+Citation metadata are provided in `CITATION.cff`. After the Zenodo archive is created, cite the version-specific DOI shown on the `v1.0.0` Zenodo record.
 
 ## License
 
-See `LICENSE`.
+The code is released under the MIT License. Data files may be subject to the terms stated in their source repositories and Figshare records.
+
+## Contact
+
+For questions about the repository, contact Antoni Luque at `antoni.luque@miami.edu`.

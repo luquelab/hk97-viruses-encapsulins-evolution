@@ -1,0 +1,33 @@
+{
+  "title": "Small viruses reveal bidirectional evolution between HK97-fold viruses and encapsulins via procapsids",
+  "description": "Analysis code and compact example data for domain co-occurrence, sequence-domain coverage, visualization, and statistical comparisons of HK97-fold viral and encapsulin proteins.",
+  "creators": [
+    {
+      "name": "Aguilar, Abelardo",
+      "affiliation": "University of Miami"
+    },
+    {
+      "name": "Miranda, Ingrid",
+      "affiliation": "University of Miami"
+    }
+  ],
+  "contributors": [
+    {
+      "name": "Luque, Antoni",
+      "affiliation": "University of Miami",
+      "type": "Supervisor"
+    }
+  ],
+  "upload_type": "software",
+  "access_right": "open",
+  "license": "MIT",
+  "version": "1.0.0",
+  "keywords": [
+    "HK97-fold",
+    "viruses",
+    "encapsulins",
+    "procapsids",
+    "viral evolution",
+    "bioinformatics"
+  ]
+}

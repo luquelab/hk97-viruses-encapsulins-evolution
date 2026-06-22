@@ -1,0 +1,14 @@
+# Package versions in the validation environment (R 4.5.2)
+shiny==1.11.1
+dplyr==1.1.4
+ggplot2==4.0.0
+mgcv==1.9-3
+scales==1.4.0
+hexbin==1.28.5
+tidyverse==2.0.0
+viridis==0.6.5
+plotly==4.11.0
+rlang==1.1.6
+rstatix==0.7.3
+FSA==0.10.1
+gridExtra==2.3
