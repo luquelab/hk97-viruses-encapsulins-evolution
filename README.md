@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20802501.svg)](https://doi.org/10.5281/zenodo.20802501)
+
 # HK97 viruses and encapsulins evolution
 
 Analysis code and compact example data accompanying the accepted Nature Communications article:
